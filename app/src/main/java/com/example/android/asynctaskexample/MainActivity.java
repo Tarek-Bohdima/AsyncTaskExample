@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -12,12 +13,14 @@ import java.lang.ref.WeakReference;
 public class MainActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
+    private Button buttonAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         progressBar = findViewById(R.id.progress_bar);
+        buttonAsyncTask = findViewById(R.id.button_start_async_task);
     }
 
     public void startAsyncTask(View v) {
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
             }
             return "Finished!";
         }
@@ -65,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             activity.progressBar.setProgress(values[0]);
+
+            if (values[0] == 50) {
+                activity.buttonAsyncTask.setText("50%");
+            }
         }
 
         @Override
@@ -79,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(activity, s, Toast.LENGTH_SHORT).show();
             activity.progressBar.setProgress(0);
             activity.progressBar.setVisibility(View.INVISIBLE);
+            activity.buttonAsyncTask.setText("START");
         }
     }
 
